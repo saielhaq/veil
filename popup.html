@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Clear All Data</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: #f8fafc;
+        padding: 15px;
+        width: 220px;
+      }
+      h3 {
+        text-align: center;
+        margin-bottom: 15px;
+        color: #38bdf8;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        background: #1e293b;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.2s;
+      }
+      button:hover {
+        background: #334155;
+      }
+      #status {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 12px;
+        color: #a3e635;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>🧹 Clear Browser Data</h3>
+    <button id="clearHistory">🕘 Clear History</button>
+    <button id="clearCookies">🍪 Clear Cookies</button>
+    <button id="clearCache">📦 Clear Cache</button>
+    <button id="clearDownloads">📥 Clear Downloads</button>
+    <button id="clearLocalStorage">💾 Clear Local Storage</button>
+    <button id="clearPasswords">🔑 Clear Passwords</button>
+    <hr />
+    <button id="clearAll">💣 Clear EVERYTHING</button>
+    <p id="status"></p>
+    <script src="popup.js"></script>
+  </body>
+</html>
