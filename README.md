@@ -12,11 +12,20 @@ Veil is a lightweight Chrome extension that provides a clean, simple interface f
 - 📥 **Clear Downloads** - Remove download history
 - 💾 **Clear Local Storage** - Clear localStorage and IndexedDB
 - 🔑 **Clear Passwords** - Remove saved passwords
-- 💣 **Clear EVERYTHING** - Nuclear option that clears all data types
+- 💣 **Clear EVERYTHING** - Nuclear option that clears all data types (excluding passwords for safety)
 
 ## Interface
 
-The extension features a dark-themed popup with a compact 220px width design. Each clearing function has its own dedicated button with emoji icons for easy identification. Status messages appear at the bottom to confirm successful operations, automatically disappearing after 2 seconds.
+The extension features a dark-themed popup with a compact 320px width design. Each clearing function has its own dedicated button with emoji icons for easy identification. All actions now require confirmation through a custom modal dialog for safety.
+
+### Confirmation System
+
+- **Smart Confirmations**: Each action shows a tailored confirmation dialog with specific warnings
+- **Safety Features**: All destructive actions require explicit confirmation
+- **Color-coded Warnings**: Different confirmation button colors indicate action severity (green for safe, orange for warning, red for dangerous)
+- **Keyboard Support**: Use Escape to cancel, modal focuses on Cancel button by default
+
+Status messages appear at the bottom to confirm successful operations, automatically disappearing after 2 seconds.
 
 ## ⚠️ Important Warning
 
@@ -30,7 +39,9 @@ The "Clear EVERYTHING" button is extremely destructive and will remove:
 - File systems data
 - Plugin data
 
-**Use with extreme caution!** This action cannot be undone and will essentially reset your browser to a clean state.
+**Note**: For safety reasons, the "Clear EVERYTHING" option does NOT include passwords by default. Passwords must be cleared separately using the dedicated "Clear Passwords" button.
+
+**Use with extreme caution!** These actions cannot be undone.
 
 ## Installation
 
@@ -79,7 +90,7 @@ veil/
 ├── manifest.json      # Extension manifest and permissions
 ├── background.js      # Service worker handling data clearing
 ├── popup.html         # Extension popup interface
-├── popup.js          # Popup interaction logic
+├── popup.js          # Popup interaction logic and confirmation modals
 ├── icon.png          # Extension icon
 └── README.md         # This file
 ```
@@ -90,14 +101,17 @@ veil/
 2. Make your changes
 3. Test the extension by loading it unpacked in Chrome
 4. Ensure all clearing functions work properly
-5. Submit a pull request
+5. Test confirmation modals and safety features
+6. Submit a pull request
 
 ### Testing
 
 Load the extension as unpacked and test each button to ensure:
 
 - Appropriate browser data is cleared
+- Confirmation modals appear with correct messaging
 - Status messages appear correctly
+- Keyboard navigation works (Escape to cancel)
 - No console errors occur
 
 ## Contributing
@@ -116,7 +130,7 @@ We welcome contributions! Here's how you can help:
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Make your changes
-4. Test thoroughly
+4. Test thoroughly, including confirmation dialogs
 5. Commit your changes (`git commit -m 'Add some amazing feature'`)
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request
@@ -125,7 +139,7 @@ We welcome contributions! Here's how you can help:
 
 - Keep code clean and well-commented
 - Follow existing code style and structure
-- Test all changes thoroughly
+- Test all changes thoroughly, including edge cases
 - Update documentation if needed
 - Be respectful in discussions
 
@@ -143,9 +157,12 @@ This extension requires the following permissions:
 
 - Initial release
 - Basic data clearing functionality
-- Clean dark-themed interface
+- Clean dark-themed interface with 320px width
 - Support for history, cookies, cache, downloads, local storage, and passwords
-- "Clear All" nuclear option
+- Custom confirmation modals for all actions
+- Safety-focused "Clear All" option (excludes passwords)
+- Keyboard navigation support
+- Color-coded confirmation buttons based on action severity
 
 ## License
 
