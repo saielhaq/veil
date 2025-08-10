@@ -8,34 +8,203 @@
         font-family: Arial, sans-serif;
         background: #0f172a;
         color: #f8fafc;
-        padding: 15px;
-        width: 220px;
+        padding: 20px;
+        width: 320px;
+        margin: 0;
+        position: relative;
+        min-height: 400px;
       }
       h3 {
         text-align: center;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
         color: #38bdf8;
+        font-size: 18px;
       }
       button {
         width: 100%;
-        padding: 10px;
-        margin: 5px 0;
+        padding: 12px;
+        margin: 6px 0;
         background: #1e293b;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
-        font-size: 14px;
-        transition: background 0.2s;
+        font-size: 15px;
+        transition: all 0.2s ease;
+        position: relative;
+        font-weight: 500;
       }
       button:hover {
         background: #334155;
+        transform: translateY(-1px);
+      }
+      button:active {
+        transform: translateY(0);
+      }
+      button#clearAll {
+        background: #dc2626;
+        margin-top: 15px;
+        font-weight: bold;
+        padding: 14px;
+        font-size: 16px;
+      }
+      button#clearAll:hover {
+        background: #b91c1c;
+      }
+      button#clearPasswords {
+        background: #ea580c;
+      }
+      button#clearPasswords:hover {
+        background: #c2410c;
+      }
+      hr {
+        border: none;
+        height: 1px;
+        background: #334155;
+        margin: 20px 0;
       }
       #status {
         margin-top: 10px;
         text-align: center;
         font-size: 12px;
         color: #a3e635;
+        min-height: 16px;
+        font-weight: bold;
+      }
+      .warning-text {
+        font-size: 10px;
+        color: #fbbf24;
+        text-align: center;
+        margin-top: 5px;
+        font-style: italic;
+      }
+
+      /* Custom Modal Styles */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        backdrop-filter: blur(4px);
+      }
+
+      .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #1e293b;
+        border-radius: 12px;
+        padding: 20px;
+        width: 280px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+        border: 1px solid #334155;
+      }
+
+      .modal-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .modal-icon {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+
+      .modal-title {
+        color: #f8fafc;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0;
+      }
+
+      .modal-message {
+        color: #cbd5e1;
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 20px;
+      }
+
+      .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .modal-button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        width: auto;
+        margin: 0;
+      }
+
+      .modal-button.cancel {
+        background: #475569;
+        color: #f8fafc;
+      }
+
+      .modal-button.cancel:hover {
+        background: #64748b;
+      }
+
+      .modal-button.confirm {
+        background: #dc2626;
+        color: white;
+        font-weight: bold;
+      }
+
+      .modal-button.confirm:hover {
+        background: #b91c1c;
+      }
+
+      .modal-button.confirm.danger {
+        background: #dc2626;
+        animation: pulse 2s infinite;
+      }
+
+      .modal-button.confirm.warning {
+        background: #ea580c;
+      }
+
+      .modal-button.confirm.warning:hover {
+        background: #c2410c;
+      }
+
+      .modal-button.confirm.normal {
+        background: #059669;
+      }
+
+      .modal-button.confirm.normal:hover {
+        background: #047857;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+
+      .modal-warning {
+        background: #451a03;
+        border: 1px solid #ea580c;
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 15px;
+        font-size: 12px;
+        color: #fed7aa;
       }
     </style>
   </head>
@@ -49,7 +218,29 @@
     <button id="clearPasswords">🔑 Clear Passwords</button>
     <hr />
     <button id="clearAll">💣 Clear EVERYTHING</button>
+    <div class="warning-text">All actions require confirmation</div>
     <p id="status"></p>
+
+    <!-- Custom Confirmation Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <span class="modal-icon" id="modalIcon">⚠️</span>
+          <h4 class="modal-title" id="modalTitle">Confirm Action</h4>
+        </div>
+        <div class="modal-warning" id="modalWarning" style="display: none">
+          <strong>⚠️ Warning:</strong> This action cannot be undone!
+        </div>
+        <div class="modal-message" id="modalMessage"></div>
+        <div class="modal-buttons">
+          <button class="modal-button cancel" id="modalCancel">Cancel</button>
+          <button class="modal-button confirm" id="modalConfirm">
+            Confirm
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script src="popup.js"></script>
   </body>
 </html>
